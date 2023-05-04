@@ -64,6 +64,7 @@ function populatePostListsContainer(){
     const elPostListContainer = document.getElementById("container");
 
     posts.forEach((post, index) => {
+        datePost = 
         elPostListContainer.innerHTML += `
         <div class="post">
             <div class="post__header">
@@ -73,7 +74,7 @@ function populatePostListsContainer(){
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${post.author.name}</div>
-                        <div class="post-meta__time">${post.created}</div>
+                        <div class="post-meta__time">${convertDateToItalianFormat(post.created)}</div>
                     </div>                    
                 </div>
             </div>
@@ -97,6 +98,14 @@ function populatePostListsContainer(){
         </div>
         `;
     })
+}
+
+function convertDateToItalianFormat(dateString){
+    let date = new Date(dateString);
+    let day = String(date.getDate()).padStart(2, '0');
+    let month = String(date.getMonth() + 1).padStart(2, '0');
+    let year = date.getFullYear();
+    return `${day}/${month}/${year}`;
 }
 
 function likeButtonClicked(id, button){
