@@ -4,7 +4,7 @@ const posts = [
         "content": "Le intelligenze artificiali DOMINERANNO IL MONDO!",
         "media": "https://i.ytimg.com/vi/-0MRt14Z3_Q/maxresdefault.jpg",
         "author": {
-            "name": "GiovanniTech42",
+            "name": "Giovanni Tech42",
             "image": "https://media.istockphoto.com/id/480651173/photo/man-with-hi-tech-circuit-theme.jpg?s=612x612&w=0&k=20&c=T6edxqT6H_m6saz8kqozStwTqULxmBRTQl3PjmTpJUY="
         },
         "likes": 2,
@@ -64,39 +64,76 @@ function populatePostListsContainer(){
     const elPostListContainer = document.getElementById("container");
 
     posts.forEach((post, index) => {
-        datePost = 
-        elPostListContainer.innerHTML += `
-        <div class="post">
-            <div class="post__header">
-                <div class="post-meta">                    
-                    <div class="post-meta__icon">
-                        <img class="profile-pic" src="${post.author.image}" alt="${post.author.name}">                    
+        if(post.author.image){
+            elPostListContainer.innerHTML += `
+            <div class="post">
+                <div class="post__header">
+                    <div class="post-meta">                    
+                        <div class="post-meta__icon">
+                            <img class="profile-pic" src="${post.author.image}" alt="${post.author.name}">                    
+                        </div>
+                        <div class="post-meta__data">
+                            <div class="post-meta__author">${post.author.name}</div>
+                            <div class="post-meta__time">${convertDateToItalianFormat(post.created)}</div>
+                        </div>                    
                     </div>
-                    <div class="post-meta__data">
-                        <div class="post-meta__author">${post.author.name}</div>
-                        <div class="post-meta__time">${convertDateToItalianFormat(post.created)}</div>
-                    </div>                    
                 </div>
+                <div class="post__text">${post.content}</div>
+                <div class="post__image">
+                    <img src="${post.media}" alt="">
+                </div>
+                <div class="post__footer">
+                    <div class="likes js-likes">
+                        <div class="likes__cta">
+                            <a class="like-button js-like-button" data-postid="${index}" onclick="likeButtonClicked(${index}, this)">
+                                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                                <span class="like-button__label">Mi Piace</span>
+                            </a>
+                        </div>
+                        <div class="likes__counter">
+                            Piace a <b id="like-counter-${index}" class="js-likes-counter">${post.likes}</b> persone
+                        </div>
+                    </div> 
+                </div>            
             </div>
-            <div class="post__text">${post.content}</div>
-            <div class="post__image">
-                <img src="${post.media}" alt="">
+            `;
+        }else{
+            elPostListContainer.innerHTML += `
+            <div class="post">
+                <div class="post__header">
+                    <div class="post-meta">                    
+                        <div class="post-meta__icon">
+                            <div class="profile-pic">
+                                ${post.author.name.split(" ")[0].charAt(0)}
+                                ${post.author.name.split(" ")[1].charAt(0)}
+                            </div>                    
+                        </div>
+                        <div class="post-meta__data">
+                            <div class="post-meta__author">${post.author.name}</div>
+                            <div class="post-meta__time">${convertDateToItalianFormat(post.created)}</div>
+                        </div>                    
+                    </div>
+                </div>
+                <div class="post__text">${post.content}</div>
+                <div class="post__image">
+                    <img src="${post.media}" alt="">
+                </div>
+                <div class="post__footer">
+                    <div class="likes js-likes">
+                        <div class="likes__cta">
+                            <a class="like-button js-like-button" data-postid="${index}" onclick="likeButtonClicked(${index}, this)">
+                                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                                <span class="like-button__label">Mi Piace</span>
+                            </a>
+                        </div>
+                        <div class="likes__counter">
+                            Piace a <b id="like-counter-${index}" class="js-likes-counter">${post.likes}</b> persone
+                        </div>
+                    </div> 
+                </div>            
             </div>
-            <div class="post__footer">
-                <div class="likes js-likes">
-                    <div class="likes__cta">
-                        <a class="like-button js-like-button" data-postid="${index}" onclick="likeButtonClicked(${index}, this)">
-                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                            <span class="like-button__label">Mi Piace</span>
-                        </a>
-                    </div>
-                    <div class="likes__counter">
-                        Piace a <b id="like-counter-${index}" class="js-likes-counter">${post.likes}</b> persone
-                    </div>
-                </div> 
-            </div>            
-        </div>
-        `;
+            `;
+        }
     })
 }
 
